@@ -1,11 +1,12 @@
 require "delorean/version"
 
 require 'treetop'
-require 'delorean/delorean'
-require 'delorean/nodes'
-require 'delorean/engine'
-require 'delorean/base'
-require 'delorean/error'
 require 'delorean/abstract_container'
-require 'delorean/model'
+require 'delorean/base'
 require 'delorean/debug'
+require 'delorean/delorean'
+require 'delorean/engine'
+require 'delorean/error'
+require 'delorean/model'
+require 'delorean/nodes'
+require 'delorean/ruby'

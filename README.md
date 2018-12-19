@@ -26,9 +26,9 @@ Or add it to your `Gemfile`, etc.
     NodeB: NodeA
         attr3 = attr1 / NodeA.attr3
     eom
-    
+
     engine.parse my_code
-    
+
     engine.evaluate("NodeB", %w{attr1 attr2 attr3})
 
 ## The Delorean Language
@@ -73,7 +73,7 @@ Therefore, in the above example, `NodeA.attr2` evaluates to `246`.
 Delorean attribute definitions have the following form:
 
 	attr = expression
-	
+
 Where `attr` is an attribute name. Attribute names are required to
 match the following regular expression: `[a-z][a-zA-Z0-9_]*`. An
 attribute can only be specified once in a node.  Also, any attributes
@@ -111,7 +111,7 @@ nodes.  The following example shows the usage of inheritance:
 
     IndiaInfo: USInfo
 		teen_min = 10
-		
+
 In this example, node `USInfo` provides a definition of a
 `is_teenager` when provided with an `age` parameter. Node `IndiaInfo`
 is derived from `USInfo` and so it shares all of its attribute
@@ -134,6 +134,33 @@ TODO: provide details on the following topics:
 
 This implementation of Delorean "compiles" script code to
 Ruby.
+
+### Calling ruby methods from Delorean
+
+Ruby methods that are called from Delorean should be whitelisted.
+
+```ruby
+
+  ::Delorean::Ruby.whitelist.add_method :length do |method|
+    method.called_on String
+    method.called_on Enumerable
+  end
+
+  ::Delorean::Ruby.whitelist.add_method :first do |method|
+    method.called_on Enumerable, with: [Integer]
+  end
+
+```
+
+By default Delorean has some methods whitelisted, such as `length`, `min`, `max`, etc. Those can be found in `/lib/delorean/ruby/whitelists/default`. If you don't want to use defaults, you can override whitelist with and empty one.
+
+```ruby
+
+  require 'delorean/ruby/whitelists/empty'
+
+  ::Delorean::Ruby.whitelist = ::Delorean::Ruby::Whitelists::Empty.new
+
+```
 
 TODO: provide details
 
